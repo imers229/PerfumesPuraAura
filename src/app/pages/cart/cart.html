@@ -1,0 +1,69 @@
+<div class="cart">
+  <div class="container">
+    <div class="cart-header">
+      <h1>Carrito de Compras</h1>
+      <p class="subtitle text-gray-400" *ngIf="cartItems.length > 0">{{ cartItems.length }} producto(s) en tu carrito</p>
+    </div>
+
+    <div class="cart-content" *ngIf="cartItems.length > 0">
+      <div class="cart-items">
+        <div class="cart-item" *ngFor="let item of cartItems">
+          <div class="item-image">
+            <img [src]="item.product.image" [alt]="item.product.name" />
+          </div>
+          <div class="item-details">
+            <h3>
+              <a [routerLink]="['/producto', item.product.id]">{{ item.product.name }}</a>
+            </h3>
+            <p class="brand text-gray-500">{{ item.product.brand }}</p>
+            <p class="category-badge">{{ item.product.category }}</p>
+          </div>
+          <div class="item-quantity">
+            <button class="qty-btn" (click)="updateQuantity(item.product.id, item.quantity - 1)" [disabled]="item.quantity <= 1">-</button>
+            <span class="quantity">{{ item.quantity }}</span>
+            <button class="qty-btn" (click)="updateQuantity(item.product.id, item.quantity + 1)">+</button>
+          </div>
+          <div class="item-price">
+            <p class="unit-price text-gray-500">{{ isNumber(item.product.price) ? '$' + (item.product.price | number:'1.2-2') + ' c/u' : item.product.price }}</p>
+            <p class="total-price">{{ isNumber(item.product.price) ? '$' + (getItemTotal(item) | number:'1.2-2') : getItemTotal(item) }}</p>
+          </div>
+          <div class="item-remove">
+            <button class="remove-btn" (click)="removeItem(item.product.id)" title="Eliminar producto">×</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cart-summary">
+        <div class="summary-card">
+          <h2>Resumen del Pedido</h2>
+          <div class="summary-details">
+            <div class="summary-row">
+              <span>Subtotal:</span>
+              <span class="amount">${{ total.toFixed(2) }}</span>
+            </div>
+            <div class="summary-row total-row">
+              <span>Total:</span>
+              <span class="total-amount">${{ total.toFixed(2) }}</span>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-checkout" (click)="checkout()">
+            📱 Comprar vía WhatsApp
+          </button>
+          <button class="btn btn-outline btn-clear" (click)="clearCart()">
+            Vaciar Carrito
+          </button>
+          <a routerLink="/catalogo/arabico" class="continue-shopping">
+            ← Continuar Comprando
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-cart" *ngIf="cartItems.length === 0">
+      <div class="empty-icon">🛍️</div>
+      <h2>Tu carrito está vacío</h2>
+      <p class="text-gray-400">Añade algunos productos para comenzar tu compra</p>
+      <a routerLink="/catalogo/arabico" class="btn btn-primary">Explorar Productos</a>
+    </div>
+  </div>
+</div>

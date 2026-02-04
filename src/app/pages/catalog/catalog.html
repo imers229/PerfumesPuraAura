@@ -1,0 +1,43 @@
+<div class="catalog">
+  <section class="catalog-header">
+    <div class="container">
+      <h1 class="fade-in">{{ categoryTitle }}</h1>
+      <p class="subtitle text-gray-400">{{ products.length }} productos disponibles</p>
+    </div>
+  </section>
+
+  <section class="catalog-content">
+    <div class="container">
+      <div class="products-grid" *ngIf="products.length > 0">
+        <div class="product-card card" *ngFor="let product of products" [class.is-out-of-stock]="!product.inStock">
+          <div class="product-image">
+            <span class="badge-out-of-stock" *ngIf="!product.inStock">Agotado</span>
+            <img [src]="product.image" [alt]="product.name" />
+
+          </div>
+          <div class="product-info">
+            <h3>{{ product.name }}</h3>
+            <p class="brand text-gray-500">{{ product.brand }}</p>
+            <p class="size-badge" *ngIf="product.size">{{ product.size }}</p>
+            <p class="description text-gray-500" *ngIf="product.description">
+              {{ product.description.substring(0, 80) }}...
+            </p>
+            <div class="notes" *ngIf="product.notes && product.notes.length > 0">
+              <span class="note" *ngFor="let note of product.notes.slice(0, 3)">{{ note }}</span>
+            </div>
+            <div class="product-footer">
+              <p class="price">{{ isNumber(product.price) ? '$' + (product.price | number:'1.2-2') : product.price }}</p>
+              <a [routerLink]="['/producto', product.id]" class="btn btn-primary">
+                Ver Detalles
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty-state" *ngIf="products.length === 0">
+        <p class="text-gray-400">No hay productos disponibles en esta categoría.</p>
+      </div>
+    </div>
+  </section>
+</div>

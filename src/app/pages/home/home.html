@@ -1,0 +1,72 @@
+<div class="home">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content fade-in">
+      <h1>PURA AURA</h1>
+      <p class="subtitle">Fragancias de Lujo que Definen tu Esencia</p>
+      <p class="description text-gray-400">Sumérgete en una selecta colección donde convergen la mística árabe, la elegancia de diseñador y la exclusividad nicho.</p>
+      <div class="hero-buttons">
+        <a routerLink="/catalogo/arabico" class="btn btn-primary">Explorar Catálogo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="featured-section">
+    <div class="container">
+      <h2 class="section-title">Fragancias Destacadas</h2>
+      <p class="section-subtitle text-gray-400">Nuestra selección premium de perfumes exclusivos</p>
+      
+      <div class="products-grid">
+        <div class="product-card card" *ngFor="let product of featuredProducts" [class.is-out-of-stock]="!product.inStock">
+          <div class="product-image">
+            <span class="badge-out-of-stock" *ngIf="!product.inStock">Agotado</span>
+            <img [src]="product.image" [alt]="product.name" />
+          </div>
+          <div class="product-info">
+            <h3>{{ product.name }}</h3>
+            <p class="brand text-gray-500">{{ product.brand }}</p>
+            <p class="price">{{ isNumber(product.price) ? '$' + (product.price | number:'1.2-2') : product.price }}</p>
+            <a [routerLink]="['/producto', product.id]" class="btn btn-primary">
+              Ver Detalles
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="categories-section">
+    <div class="container">
+      <h2 class="section-title">Explora Nuestras Categorías</h2>
+      <div class="categories-grid">
+        <div class="category-card card">
+          <div class="category-icon">✨</div>
+          <h3>Perfumes Árabes</h3>
+          <p class="text-gray-500">Fragancias intensas y exóticas del Medio Oriente</p>
+          <a routerLink="/catalogo/arabico" class="btn btn-outline">Ver Más</a>
+        </div>
+        <div class="category-card card">
+          <div class="category-icon">💎</div>
+          <h3>Perfumes de Diseñador</h3>
+          <p class="text-gray-500">Las marcas más prestigiosas del mundo</p>
+          <a routerLink="/catalogo/diseñador" class="btn btn-outline">Ver Más</a>
+        </div>
+        <div class="category-card card">
+          <div class="category-icon">👑</div>
+          <h3>Perfumes Nicho</h3>
+          <p class="text-gray-500">Fragancias exclusivas y artesanales de alta perfumería</p>
+          <a routerLink="/catalogo/nicho" class="btn btn-outline">Ver Más</a>
+        </div>
+        <div class="category-card card">
+          <div class="category-icon">🧪</div>
+          <h3>Decants</h3>
+          <p class="text-gray-500">Prueba tus fragancias favoritas en formato 5ml</p>
+          <a routerLink="/catalogo/arabico-decant" class="btn btn-outline">Ver Más</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

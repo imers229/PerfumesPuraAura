@@ -1,0 +1,59 @@
+<nav class="navbar">
+  <div class="container">
+    <div class="navbar-content">
+      <div class="logo">
+        <a routerLink="/">
+          <h1>PURA AURA</h1>
+        </a>
+      </div>
+
+      <ul class="nav-links">
+        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a></li>
+        <li class="dropdown" (mouseenter)="toggleCatalog()" (mouseleave)="closeCatalog()">
+          <a class="dropdown-toggle">
+            Catálogo
+            <span class="arrow">▼</span>
+          </a>
+          <ul class="dropdown-menu" [class.show]="catalogOpen">
+            <li class="submenu-item" (mouseenter)="openArabicSubmenu()" (mouseleave)="closeSubmenu()">
+              <a>
+                Perfumes Árabes
+                <span class="arrow-right">›</span>
+              </a>
+              <ul class="submenu" [class.show]="arabicSubmenuOpen">
+                <li><a routerLink="/catalogo/arabico" (click)="closeCatalog()">Perfumes Completos</a></li>
+                <li><a routerLink="/catalogo/arabico-decant" (click)="closeCatalog()">Decants</a></li>
+              </ul>
+            </li>
+            <li class="submenu-item" (mouseenter)="openDesignerSubmenu()" (mouseleave)="closeSubmenu()">
+              <a>
+                Perfumes de Diseñador
+                <span class="arrow-right">›</span>
+              </a>
+              <ul class="submenu" [class.show]="designerSubmenuOpen">
+                <li><a routerLink="/catalogo/diseñador" (click)="closeCatalog()">Perfumes Completos</a></li>
+                <li><a routerLink="/catalogo/diseñador-decant" (click)="closeCatalog()">Decants</a></li>
+              </ul>
+            </li>
+            <li class="submenu-item" (mouseenter)="openNicheSubmenu()" (mouseleave)="closeSubmenu()">
+              <a>
+                Perfumes Nicho
+                <span class="arrow-right">›</span>
+              </a>
+              <ul class="submenu" [class.show]="nicheSubmenuOpen">
+                <li><a routerLink="/catalogo/nicho" (click)="closeCatalog()">Perfumes Completos</a></li>
+                <li><a routerLink="/catalogo/nicho-decant" (click)="closeCatalog()">Decants</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="cart-link">
+          <a routerLink="/carrito" routerLinkActive="active">
+            🛒 Carrito
+            <span class="cart-badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

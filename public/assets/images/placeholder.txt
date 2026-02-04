@@ -1,0 +1,12 @@
+Para agregar imágenes de productos:
+
+1. Coloca las imágenes de los perfumes en esta carpeta
+2. Nombra las imágenes como:
+   - oud-majesty.jpg
+   - desert-rose.jpg
+   - sauvage.jpg
+   - black-opium.jpg
+
+O puedes actualizar el servicio de productos (src/app/services/product.ts) 
+para usar URLs de imágenes externas o un placeholder service como:
+https://via.placeholder.com/300x400/1a1a1a/C5B358?text=Perfume

@@ -1,0 +1,70 @@
+<div class="product-detail" *ngIf="product">
+  <div class="container">
+    <div class="breadcrumb">
+      <a routerLink="/">Inicio</a> / 
+      <a [routerLink]="['/catalogo', product.category]">{{ product.category }}</a> / 
+      <span>{{ product.name }}</span>
+    </div>
+
+    <div class="detail-grid">
+      <div class="image-section">
+        <div class="main-image">
+          <img [src]="product.image" [alt]="product.name" />
+        </div>
+      </div>
+
+      <div class="info-section">
+        <div class="product-header">
+          <span class="category-badge">{{ product.category }}</span>
+          <span class="size-badge" *ngIf="product.size">{{ product.size }}</span>
+          <h1>{{ product.name }}</h1>
+          <p class="brand">{{ product.brand }}</p>
+        </div>
+
+        <div class="price-section">
+          <p class="price">{{ isNumber(product.price) ? '$' + (product.price | number:'1.2-2') : product.price }}</p>
+        </div>
+
+        <div class="description-section">
+          <h3>Descripción</h3>
+          <p class="text-gray-500">{{ product.description }}</p>
+        </div>
+
+        <div class="accords-section" *ngIf="product.mainAccords && product.mainAccords.length > 0">
+          <h3>Acordes Principales</h3>
+          <div class="accords-container">
+            <div class="accord-bar" *ngFor="let accord of product.mainAccords" 
+                 [style.width.%]="accord.width * 3" 
+                 [style.background-color]="accord.color">
+              {{ accord.name }}
+            </div>
+          </div>
+        </div>
+
+        <div class="quantity-section" *ngIf="product.inStock">
+          <h3>Cantidad</h3>
+          <div class="quantity-control">
+            <button class="qty-btn" (click)="decreaseQuantity()" [disabled]="quantity <= 1">-</button>
+            <span class="quantity-display">{{ quantity }}</span>
+            <button class="qty-btn" (click)="increaseQuantity()">+</button>
+          </div>
+        </div>
+
+        <div class="actions-section">
+          <!-- Botón normal de compra -->
+          <button *ngIf="product.inStock" class="btn btn-primary btn-large" (click)="addToCart()" [disabled]="addedToCart">
+            <span *ngIf="!addedToCart">🛍️ Añadir al Carrito</span>
+            <span *ngIf="addedToCart">✔️ ¡Añadido!</span>
+          </button>
+          
+          <!-- Botón de solicitar pedido (si está agotado) -->
+          <button *ngIf="!product.inStock" class="btn btn-whatsapp btn-large" (click)="requestOrder()">
+            📲 Solicitar Pedido por WhatsApp
+          </button>
+
+          <a routerLink="/carrito" class="btn btn-outline btn-large">Ver Carrito</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
