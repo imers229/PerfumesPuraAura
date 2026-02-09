@@ -6,6 +6,7 @@ export interface Product {
   price: number | string;
   image: string;
   description: string;
+  gender?: 'masculino' | 'femenino' | 'unisex'; // Para identificar si es para hombre, mujer o ambos
   notes?: string[];
   mainAccords?: { name: string; color: string; width: number }[];
   size?: string; // Para identificar el tamaño del decant

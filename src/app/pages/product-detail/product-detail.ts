@@ -5,6 +5,8 @@ import { ProductService } from '../../services/product';
 import { CartService } from '../../services/cart';
 import { Product } from '../../models/product.model';
 
+declare const Swal: any;
+
 @Component({
   selector: 'app-product-detail',
   imports: [CommonModule, RouterLink],
@@ -29,13 +31,35 @@ export class ProductDetail implements OnInit {
       const id = +params['id'];
       this.product = this.productService.getProductById(id);
       if (!this.product) {
-        this.router.navigate(['/']);
+        Swal.fire({
+          icon: 'error',
+          title: 'Producto no encontrado',
+          text: 'Este producto no existe en nuestro catálogo',
+          confirmButtonColor: '#c5b358',
+          background: '#0a0a0a',
+          color: '#fff'
+        }).then(() => {
+          this.router.navigate(['/']);
+        });
       }
     });
   }
 
   isNumber(val: any): boolean {
     return typeof val === 'number';
+  }
+
+  getGenderLabel(gender?: string): string {
+    switch(gender) {
+      case 'masculino':
+        return '♂ Hombre';
+      case 'femenino':
+        return '♀ Mujer';
+      case 'unisex':
+        return '⚤ Unisex';
+      default:
+        return '';
+    }
   }
 
   increaseQuantity() {
@@ -51,18 +75,45 @@ export class ProductDetail implements OnInit {
   addToCart() {
     if (this.product) {
       this.cartService.addToCart(this.product, this.quantity);
-      this.addedToCart = true;
-      setTimeout(() => {
-        this.addedToCart = false;
-      }, 2000);
+      
+      Swal.fire({
+        icon: 'success',
+        title: '¡Agregado al carrito!',
+        html: `<p><strong>${this.product.name}</strong></p><p>Cantidad: ${this.quantity}</p>`,
+        confirmButtonColor: '#c5b358',
+        background: '#0a0a0a',
+        color: '#fff',
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
     }
   }
 
   requestOrder() {
     if (this.product) {
-      const message = `Hola Pura Aura, estoy interesado en el perfume *${this.product.name}* pero figura como Agotado en la web. Quisiera más información o solicitar un pedido especial.`;
-      const url = `https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank');
+      if (!this.product.inStock) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Producto Agotado',
+          text: 'Te redirigiremos a WhatsApp para más información',
+          confirmButtonColor: '#c5b358',
+          background: '#0a0a0a',
+          color: '#fff',
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+
+        setTimeout(() => {
+          const message = `Hola Pura Aura, estoy interesado en el perfume *${this.product!.name}* pero figura como Agotado en la web. Quisiera más información o solicitar un pedido especial.`;
+          const url = `https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent(message)}`;
+          window.open(url, '_blank');
+          Swal.close();
+        }, 1500);
+      }
     }
   }
 }

@@ -11,9 +11,6 @@ import { CartService } from '../../services/cart';
 })
 export class Navbar {
   catalogOpen = false;
-  arabicSubmenuOpen = false;
-  designerSubmenuOpen = false;
-  nicheSubmenuOpen = false;
   cartItemCount = 0;
 
   constructor(private cartService: CartService) {
@@ -28,32 +25,5 @@ export class Navbar {
 
   closeCatalog() {
     this.catalogOpen = false;
-    this.arabicSubmenuOpen = false;
-    this.designerSubmenuOpen = false;
-    this.nicheSubmenuOpen = false;
-  }
-
-  openArabicSubmenu() {
-    this.arabicSubmenuOpen = true;
-    this.designerSubmenuOpen = false;
-    this.nicheSubmenuOpen = false;
-  }
-
-  openDesignerSubmenu() {
-    this.arabicSubmenuOpen = false;
-    this.designerSubmenuOpen = true;
-    this.nicheSubmenuOpen = false;
-  }
-
-  openNicheSubmenu() {
-    this.arabicSubmenuOpen = false;
-    this.designerSubmenuOpen = false;
-    this.nicheSubmenuOpen = true;
-  }
-
-  closeSubmenu() {
-    this.arabicSubmenuOpen = false;
-    this.designerSubmenuOpen = false;
-    this.nicheSubmenuOpen = false;
   }
 }

@@ -89,6 +89,36 @@
   font-weight: 600;
   border: 1px solid rgba(197, 179, 88, 0.4);
   margin-bottom: 1rem;
+  margin-right: 0.5rem;
+}
+
+.gender-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 1.5px solid;
+  margin-bottom: 1rem;
+}
+
+.gender-masculino {
+  background-color: rgba(70, 130, 180, 0.15);
+  color: #5a9fd4;
+  border-color: #5a9fd4;
+}
+
+.gender-femenino {
+  background-color: rgba(219, 112, 147, 0.15);
+  color: #e85a9e;
+  border-color: #e85a9e;
+}
+
+.gender-unisex {
+  background-color: rgba(147, 112, 219, 0.15);
+  color: #9370db;
+  border-color: #9370db;
 }
 
 .product-header h1 {

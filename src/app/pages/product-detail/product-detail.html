@@ -17,6 +17,9 @@
         <div class="product-header">
           <span class="category-badge">{{ product.category }}</span>
           <span class="size-badge" *ngIf="product.size">{{ product.size }}</span>
+          <span class="gender-badge" [ngClass]="'gender-' + product.gender" *ngIf="product.gender">
+            {{ getGenderLabel(product.gender) }}
+          </span>
           <h1>{{ product.name }}</h1>
           <p class="brand">{{ product.brand }}</p>
         </div>

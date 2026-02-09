@@ -15,37 +15,14 @@
             <span class="arrow">▼</span>
           </a>
           <ul class="dropdown-menu" [class.show]="catalogOpen">
-            <li class="submenu-item" (mouseenter)="openArabicSubmenu()" (mouseleave)="closeSubmenu()">
-              <a>
-                Perfumes Árabes
-                <span class="arrow-right">›</span>
-              </a>
-              <ul class="submenu" [class.show]="arabicSubmenuOpen">
-                <li><a routerLink="/catalogo/arabico" (click)="closeCatalog()">Perfumes Completos</a></li>
-                <li><a routerLink="/catalogo/arabico-decant" (click)="closeCatalog()">Decants</a></li>
-              </ul>
-            </li>
-            <li class="submenu-item" (mouseenter)="openDesignerSubmenu()" (mouseleave)="closeSubmenu()">
-              <a>
-                Perfumes de Diseñador
-                <span class="arrow-right">›</span>
-              </a>
-              <ul class="submenu" [class.show]="designerSubmenuOpen">
-                <li><a routerLink="/catalogo/diseñador" (click)="closeCatalog()">Perfumes Completos</a></li>
-                <li><a routerLink="/catalogo/diseñador-decant" (click)="closeCatalog()">Decants</a></li>
-              </ul>
-            </li>
-            <li class="submenu-item" (mouseenter)="openNicheSubmenu()" (mouseleave)="closeSubmenu()">
-              <a>
-                Perfumes Nicho
-                <span class="arrow-right">›</span>
-              </a>
-              <ul class="submenu" [class.show]="nicheSubmenuOpen">
-                <li><a routerLink="/catalogo/nicho" (click)="closeCatalog()">Perfumes Completos</a></li>
-                <li><a routerLink="/catalogo/nicho-decant" (click)="closeCatalog()">Decants</a></li>
-              </ul>
-            </li>
+            <li><a routerLink="/catalogo/perfumes" (click)="closeCatalog()">Perfumes</a></li>
+            <li><a routerLink="/catalogo/decants" (click)="closeCatalog()">Decants</a></li>
           </ul>
+        </li>
+        <li class="promotions-link">
+          <a routerLink="/promociones" class="btn-promotions">
+            🎉 Promociones
+          </a>
         </li>
         <li class="cart-link">
           <a routerLink="/carrito" routerLinkActive="active">

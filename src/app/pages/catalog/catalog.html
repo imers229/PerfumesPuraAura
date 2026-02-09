@@ -2,21 +2,116 @@
   <section class="catalog-header">
     <div class="container">
       <h1 class="fade-in">{{ categoryTitle }}</h1>
-      <p class="subtitle text-gray-400">{{ products.length }} productos disponibles</p>
+      <p class="subtitle text-gray-400">{{ filteredProducts.length }} de {{ products.length }} productos</p>
+    </div>
+  </section>
+
+  <!-- BARRA DE BÚSQUEDA Y FILTROS -->
+  <section class="search-filters">
+    <div class="container">
+      <!-- Barra de Búsqueda -->
+      <div class="search-bar-wrapper">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input 
+            type="text" 
+            placeholder="Buscar por nombre, marca o descripción..."
+            [(ngModel)]="searchQuery"
+            (input)="onSearchChange()"
+            class="search-input"
+          />
+          <button *ngIf="searchQuery" (click)="searchQuery = ''; onSearchChange()" class="clear-btn">✕</button>
+        </div>
+      </div>
+
+      <!-- Filtros -->
+      <div class="filters-grid">
+        <!-- Filtro por Género -->
+        <div class="filter-group">
+          <label class="filter-label">Género</label>
+          <select 
+            [(ngModel)]="selectedGender"
+            (change)="onFilterChange()"
+            class="filter-select"
+          >
+            <option value="">Todos</option>
+            <option *ngFor="let gender of genders" [value]="gender">
+              {{ genderLabels[gender] }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Filtro por Marca -->
+        <div class="filter-group">
+          <label class="filter-label">Marca</label>
+          <select 
+            [(ngModel)]="selectedBrand"
+            (change)="onFilterChange()"
+            class="filter-select"
+          >
+            <option value="">Todas las marcas</option>
+            <option *ngFor="let brand of brands" [value]="brand">
+              {{ brand }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Filtro por Precio Mínimo -->
+        <div class="filter-group">
+          <label class="filter-label">Precio Mín: ${{ minPrice }}</label>
+          <input 
+            type="range" 
+            [(ngModel)]="minPrice"
+            (input)="onFilterChange()"
+            min="0"
+            max="200"
+            class="filter-range"
+          />
+        </div>
+
+        <!-- Filtro por Precio Máximo -->
+        <div class="filter-group">
+          <label class="filter-label">Precio Máx: ${{ maxPrice }}</label>
+          <input 
+            type="range" 
+            [(ngModel)]="maxPrice"
+            (input)="onFilterChange()"
+            min="0"
+            max="200"
+            class="filter-range"
+          />
+        </div>
+
+        <!-- Botón Limpiar Filtros -->
+        <div class="filter-group">
+          <button 
+            *ngIf="searchQuery || selectedGender || selectedBrand || minPrice > 0 || maxPrice < 200"
+            (click)="clearFilters()"
+            class="btn-clear-filters"
+          >
+            🔄 Limpiar Filtros
+          </button>
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="catalog-content">
     <div class="container">
-      <div class="products-grid" *ngIf="products.length > 0">
-        <div class="product-card card" *ngFor="let product of products" [class.is-out-of-stock]="!product.inStock">
+      <div class="products-grid" *ngIf="filteredProducts.length > 0">
+        <div class="product-card card" *ngFor="let product of filteredProducts" [class.is-out-of-stock]="!product.inStock">
           <div class="product-image">
             <span class="badge-out-of-stock" *ngIf="!product.inStock">Agotado</span>
             <img [src]="product.image" [alt]="product.name" />
 
           </div>
           <div class="product-info">
-            <h3>{{ product.name }}</h3>
+            <div class="product-header">
+              <h3>{{ product.name }}</h3>
+              <span class="gender-badge" [ngClass]="'gender-' + product.gender">
+                {{ getGenderLabel(product.gender) }}
+              </span>
+            </div>
             <p class="brand text-gray-500">{{ product.brand }}</p>
             <p class="size-badge" *ngIf="product.size">{{ product.size }}</p>
             <p class="description text-gray-500" *ngIf="product.description">
@@ -35,8 +130,9 @@
         </div>
       </div>
 
-      <div class="empty-state" *ngIf="products.length === 0">
-        <p class="text-gray-400">No hay productos disponibles en esta categoría.</p>
+      <div class="empty-state" *ngIf="filteredProducts.length === 0">
+        <p class="text-gray-400">😕 No se encontraron productos que coincidan con tus filtros.</p>
+        <button (click)="clearFilters()" class="btn btn-secondary">Limpiar Filtros e Intentar Nuevamente</button>
       </div>
     </div>
   </section>
